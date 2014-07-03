@@ -7,9 +7,9 @@
     "license": "GPL",
     "authors": [
         {
-            "name": "Rafael Diaz-Tushman",
-            "email": "rdiaztushman@dioscouri.com",
-            "homepage": "http://dioscouri.com",
+            "name": "Chris French",
+            "email": "chris@ammonitenetworks.com",
+            "homepage": "http://ammonitenetworks.com",
             "role": "Developer"
         }
     ],
@@ -17,13 +17,11 @@
         "php": ">=5.4.0",
         "dioscouri/f3-lib": "dev-master",
         "dioscouri/f3-admin": "dev-master",
-        "dioscouri/f3-minify": "dev-master",
-        "dioscouri/f3-search": "dev-master",
-        "dioscouri/f3-affiliates": "dev-master"
+        "dioscouri/f3-search": "dev-master"
     },
     "autoload": {
         "psr-0": {
-            "Shop": "src/"
+            "Finances": "src/"
         }
     }    
 }
