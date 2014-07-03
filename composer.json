@@ -1,0 +1,29 @@
+{
+    "name": "ammonitenetworks/f3-finances",
+    "type": "component",
+    "description": "Finances component for the F3-framework",
+    "keywords": ["F3","RAD", "Finances"],
+    "homepage": "https://github.com/ammonitenetworks/f3-finances",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Rafael Diaz-Tushman",
+            "email": "rdiaztushman@dioscouri.com",
+            "homepage": "http://dioscouri.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "dioscouri/f3-lib": "dev-master",
+        "dioscouri/f3-admin": "dev-master",
+        "dioscouri/f3-minify": "dev-master",
+        "dioscouri/f3-search": "dev-master",
+        "dioscouri/f3-affiliates": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Shop": "src/"
+        }
+    }    
+}
