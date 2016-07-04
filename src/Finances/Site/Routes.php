@@ -29,14 +29,28 @@ class Routes extends \Dsc\Routes\Group{
 								'controller' => 'Dashboard',
 								'action' => 'index'
 								));
-		$this->add( '/about', 'GET', array(
+		/*$this->add( '/about', 'GET', array(
 				'controller' => 'Dashboard',
 				'action' => 'about'
+		));*/
+		
+		$this->app->route('GET /finances/about', function() {
+			$this->app->reroute('/pages/finances-about');
+		});
+		
+		$this->add( '/transactions/json', 'GET|POST', array(
+				'controller' => 'Tranactions',
+				'action' => 'json'
 		));
+		$this->addCrudGroup( 'Transactions', 'Transaction' );
+		
+		
+		
 		$this->add( '/transactions', 'GET|POST', array(
 								'controller' => 'Transactions',
-								'action' => 'index'
+								'action' => 'json'
 								));
+		
 		$this->add( '/transaction/details/@id', 'GET|POST', array(
 				'controller' => 'Transaction',
 				'action' => 'details'

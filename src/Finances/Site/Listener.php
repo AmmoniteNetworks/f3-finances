@@ -50,8 +50,8 @@ class Listener extends \Prefab {
 		} else {
 			$item->description = 'One time Donation';
 		}
-				
-		$item->type = $stripeEvent->data->object->object;
+		$item->created = $stripeEvent->data->object->created;
+		$item->type = 'Donation Deposit';
 		$item->paid = $stripeEvent->data->object->paid;
 		$item->currency = $stripeEvent->data->object->currency;
 		$item->amount = $stripeEvent->data->object->amount;
@@ -152,20 +152,92 @@ class Listener extends \Prefab {
 	 * customer.subscription.created describes a subscription Occurs whenever a customer with no subscription is signed up for a plan.
 	 */
 	public function onStriperWebhookCustomerSubscriptionCreated($event) {
-		$stripeEvent = $event->getArgument ( 'event' );
+	$stripeEvent = $event->getArgument ( 'event' );
+		
+		//GET ALL THE ACTIVE SUBS AND UPDATE USER DOC.
+		$user = (new \Users\Models\Users)->setCondition('stripe.customer.id',$stripeEvent->data->object->customer)->getItem();
+		
+		//We got the user
+		if(!empty($user->id)) {
+			$subs = \Stripe\Customer::retrieve($stripeEvent->data->object->customer)->subscriptions->all(array());
+			
+			
+			$subscriptions = array();
+			foreach($subs->data as $sub) {
+				$subscriptions[$sub->id] = array(
+					'name' => $sub->plan->name,
+					'amount' => $sub->plan->amount
+				);
+				
+			}
+			
+			if(!empty($subscriptions)) {
+				$user->addToGroupsBySlugs(['subscriber']);
+			}
+			
+			
+			
+			$user->set('stripe.subscriptions',$subscriptions )->save();
+			
+		}
 	}
 	
 	/*
 	 * customer.subscription.updated describes a subscription Occurs whenever a subscription changes. Examples would include switching from one plan to another, or switching status from trial to active.
 	 */
 	public function onStriperWebhookCustomerSubscriptionUpdated($event) {
-		$stripeEvent = $event->getArgument ( 'event' );
+	$stripeEvent = $event->getArgument ( 'event' );
+		
+		//GET ALL THE ACTIVE SUBS AND UPDATE USER DOC.
+		$user = (new \Users\Models\Users)->setCondition('stripe.customer.id',$stripeEvent->data->object->customer)->getItem();
+		
+		//We got the user
+		if(!empty($user->id)) {
+			$subs = \Stripe_Customer::retrieve($stripeEvent->data->object->customer)->subscriptions->all(array());
+			
+			
+			
+			$subscriptions = array();
+			foreach($subs->data as $sub) {
+				$subscriptions[$sub->id] = array(
+					'name' => $sub->plan->name,
+					'amount' => $sub->plan->amount
+				);
+				
+			}
+			
+			$user->set('stripe.subscriptions',$subscriptions )->save();
+			
+		}
 	}
 	/*
 	 * customer.subscription.deleted describes a subscription Occurs whenever a customer ends their subscription.
 	 */
 	public function onStriperWebhookCustomerSubscriptionDeleted($event) {
 		$stripeEvent = $event->getArgument ( 'event' );
+		
+		//GET ALL THE ACTIVE SUBS AND UPDATE USER DOC.
+		$user = (new \Users\Models\Users)->setCondition('stripe.customer.id',$stripeEvent->data->object->customer)->getItem();
+		
+		//We got the user
+		if(!empty($user->id)) {
+			$subs = \Stripe_Customer::retrieve($stripeEvent->data->object->customer)->subscriptions->all(array());
+			
+			
+			
+			$subscriptions = array();
+			foreach($subs->data as $sub) {
+				$subscriptions[$sub->id] = array(
+					'name' => $sub->plan->name,
+					'amount' => $sub->plan->amount
+				);
+				
+			}
+			
+			$user->set('stripe.subscriptions',$subscriptions )->save();
+			
+		}
+
 	}
 	/*
 	 * customer.subscription.trial_will_end describes a subscription Occurs three days before the trial period of a subscription is scheduled to end.

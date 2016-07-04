@@ -15,9 +15,8 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "dioscouri/f3-lib": "dev-master",
-        "dioscouri/f3-admin": "dev-master",
-        "dioscouri/f3-search": "dev-master"
+        "ammonitenetworks/library": "dev-master",
+        "ammonitenetworks/admin": "dev-master",
     },
     "autoload": {
         "psr-0": {

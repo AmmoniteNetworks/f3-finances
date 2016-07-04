@@ -6,7 +6,7 @@ class Dashboard extends \Dsc\Controller
     public function index()
     {   
    	
-        $this->app->set('pagetitle', 'Home');
+        $this->app->set('meta.title', 'Finances');
         $this->app->set('subtitle', '');
 		
         $dash = (New \Finances\Models\Dashboard)->setCondition('type','stripe')->getItem();
@@ -24,7 +24,7 @@ class Dashboard extends \Dsc\Controller
     public function about()
     {
     
-    	$this->app->set('pagetitle', 'About');
+    	$this->app->set('meta.title', 'About Finances');
     	$this->app->set('subtitle', '');
     
     	$view = \Dsc\System::instance()->get( 'theme' );
